@@ -6,8 +6,8 @@ import pandas as pd
 import base64
 
 # Load the models
-first_innings_model = joblib.load("data/final_score_predictor.pkl")
-second_innings_model = joblib.load("data/win_predictor.pkl")
+first_innings_model = joblib.load("final_score_predictor.pkl")
+second_innings_model = joblib.load("win_predictor.pkl")
 
 # Team encoding (same as training)
 team_encoding = {
