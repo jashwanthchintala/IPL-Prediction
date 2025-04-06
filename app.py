@@ -1,15 +1,15 @@
-# streamlit_app.py
+
 import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
 import base64
 
-# Load the models
+
 first_innings_model = joblib.load("final_score_predictor.pkl")
 second_innings_model = joblib.load("win_predictor.pkl")
 
-# Team encoding (same as training)
+
 team_encoding = {
     'Kolkata Knight Riders': 0,
     'Royal Challengers Bangalore': 1,
@@ -28,24 +28,8 @@ def get_base64_gif(filepath):
         return base64.b64encode(f.read()).decode()
 
 st.set_page_config(page_title="IPL Predictor", layout="centered")
-st.markdown("""
-    <style>
-        .stApp {
-            background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-            color: white;
-        }
-        .title {
-            font-size: 3rem;
-            font-weight: bold;
-            text-align: center;
-            padding-bottom: 20px;
-            color: #ffcc00;
-            text-shadow: 2px 2px #000000;
-        }
-    </style>
-""", unsafe_allow_html=True)
 
-st.markdown('<div class="title">🏏 IPL Match Predictor</div>', unsafe_allow_html=True)
+st.title("🏏 IPL Match Predictor")
 
 st.markdown("### Enter Match Details")
 
@@ -56,11 +40,11 @@ bowling_team = st.selectbox("Select Bowling Team", list(team_encoding.keys()))
 
 current_score = st.number_input("Current Score", min_value=0, max_value=300, step=1)
 
-# Dropdowns for wickets and overs
+
 wickets = st.selectbox("Wickets Fallen", list(range(0, 11)))
 overs_completed = st.selectbox("Overs Completed", list(range(1, 21)))
 
-# Only show target input if second innings is selected
+
 target = None
 if innings_type == "Second":
     target = st.number_input("Target Score", min_value=1, max_value=300, step=1)
