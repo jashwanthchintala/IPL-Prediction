@@ -6,14 +6,14 @@ from sklearn.metrics import mean_absolute_error, accuracy_score
 import joblib
 import os
 
-# Create output folder if it doesn't exist
+
 os.makedirs("data", exist_ok=True)
 
-# Load datasets
+
 match_data = pd.read_csv("data/match_data.csv", low_memory=False)
 match_info = pd.read_csv("data/match_info_data.csv")
 
-# ===== FIRST INNINGS: SCORE PREDICTION =====
+# FIRST INNINGS
 first_innings = match_data[match_data['innings'] == 1].copy()
 first_innings['total_runs'] = first_innings['runs_off_bat'] + first_innings['extras']
 first_innings['over'] = first_innings['ball'].astype(str).str.extract(r'(\d+)')[0].fillna(0).astype(int)
@@ -38,7 +38,7 @@ final_scores.columns = ['match_id', 'final_score']
 
 first_model_data = overwise.merge(final_scores, on='match_id')
 
-# Encode teams
+
 teams = pd.concat([first_model_data['batting_team'], first_model_data['bowling_team']]).unique()
 team_encoding = {team: i for i, team in enumerate(teams)}
 first_model_data['batting_team_enc'] = first_model_data['batting_team'].map(team_encoding)
@@ -57,7 +57,7 @@ print("Final Score Prediction MAE:", mean_absolute_error(y1_test, reg_model.pred
 
 joblib.dump(reg_model, "data/final_score_predictor.pkl")
 
-# ===== SECOND INNINGS: WIN PREDICTION =====
+# SECOND INNINGS
 second_innings = match_data[match_data['innings'] == 2].copy()
 second_innings['total_runs'] = second_innings['runs_off_bat'] + second_innings['extras']
 second_innings['over'] = second_innings['ball'].astype(str).str.extract(r'(\d+)')[0].fillna(0).astype(int)
