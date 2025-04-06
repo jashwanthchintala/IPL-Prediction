@@ -37,7 +37,7 @@ innings_type = st.selectbox("Select Innings", ["First", "Second"])
 batting_team = st.selectbox("Select Batting Team", list(team_encoding.keys()))
 bowling_team = st.selectbox("Select Bowling Team", list(team_encoding.keys()))
 
-current_score = st.number_input("Current Score", min_value=0, max_value=300, step=1)
+current_score = st.number_input("Current Score", min_value=0, max_value=400, step=1)
 
 
 wickets = st.selectbox("Wickets Fallen", list(range(0, 11)))
